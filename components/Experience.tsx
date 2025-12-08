@@ -38,6 +38,9 @@ export const Experience: React.FC<ExperienceProps> = ({
   // Or just rely on OrbitControls being controlled by user or auto-rotate disabled.
   const isDetailView = !!selectedPhoto;
 
+  // Force Chaos mode (expansion) when a photo is selected
+  const effectiveMode = isDetailView ? TreeMode.CHAOS : mode;
+
   return (
     <>
       <OrbitControls
@@ -69,16 +72,16 @@ export const Experience: React.FC<ExperienceProps> = ({
       <pointLight position={[-10, 5, -10]} intensity={1} color="#D4AF37" />
 
       <group position={[0, -5, 0]}>
-        <Foliage mode={mode} count={12000} />
-        <Ornaments mode={mode} count={600} />
+        <Foliage mode={effectiveMode} count={12000} />
+        <Ornaments mode={effectiveMode} count={600} />
         <Polaroids
-          mode={mode}
+          mode={effectiveMode}
           uploadedPhotos={uploadedPhotos}
           selectedPhoto={selectedPhoto}
           onPhotoClick={onPhotoClick}
           isFullScreen={isFullScreen}
         />
-        <TreeStar mode={mode} />
+        <TreeStar mode={effectiveMode} />
 
         {/* Floor Reflections */}
         <ContactShadows
