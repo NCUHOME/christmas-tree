@@ -58,7 +58,11 @@ export const Experience: React.FC<ExperienceProps> = ({
       />
 
       {/* Lighting Setup */}
-      <Environment preset="lobby" background={false} blur={0.8} />
+      <Environment
+        files="/hdri/st_fagans_interior_1k.hdr"
+        background={false}
+        blur={0.8}
+      />
 
       <ambientLight intensity={0.2} color="#004422" />
       <spotLight
