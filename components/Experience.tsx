@@ -12,6 +12,7 @@ import { Foliage } from "./Foliage";
 import { Ornaments } from "./Ornaments";
 import { Polaroids } from "./Polaroids";
 import { TreeStar } from "./TreeStar";
+import { Snow } from "./Snow"; // Import Snow
 import { TreeMode } from "../types";
 import * as THREE from "three";
 
@@ -86,6 +87,9 @@ export const Experience: React.FC<ExperienceProps> = ({
           isFullScreen={isFullScreen}
         />
         <TreeStar mode={effectiveMode} />
+
+        {/* Snow Effect */}
+        <Snow count={2000} range={50} height={50} />
 
         {/* Floor Reflections */}
         <ContactShadows
