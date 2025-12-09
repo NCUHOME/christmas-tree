@@ -1,0 +1,35 @@
+name: Build and Deploy
+
+on:
+  push:
+    branches: [main]
+  workflow_dispatch:
+
+jobs:
+  build:
+    runs-on: self-hosted
+    steps:
+      - uses: actions/checkout@v5
+
+      - name: Install Node.js
+        uses: actions/setup-node@v5
+        with:
+          package-manager-cache: false
+          node-version: 22
+
+      - name: Build dist
+        run: |
+          corepack enable
+          pnpm install
+          pnpm build
+
+      - name: Sync to S3
+        env:
+          AWS_REGION: garage
+          AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
+          AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+          AWS_ENDPOINT_URL: ${{ secrets.AWS_ENDPOINT_URL }}
+          AWS_MAX_ATTEMPTS: 10
+          BUCKET_NAME: christmas-tree
+        run: |
+          aws s3 sync dist/ s3://$BUCKET_NAME/ --delete
